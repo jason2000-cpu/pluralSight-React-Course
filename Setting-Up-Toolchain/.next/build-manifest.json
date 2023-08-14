@@ -17,11 +17,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
-    "/ImageChangeOnScroll": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/ImageChangeOnScroll.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
