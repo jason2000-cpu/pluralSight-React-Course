@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ConfigContext } from "./App";
 
 
 export default function SignMeUp({  signUpCallback }) {
     const [email, setEmail] = useState();
+    const context = useContext(ConfigContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -11,7 +13,7 @@ export default function SignMeUp({  signUpCallback }) {
         alert("Signed up successfully");
     }
     
-    return (
+    return context.showSignMeUp  === false ? null :  (
         <div className="container">
             <div>
                 <input 
