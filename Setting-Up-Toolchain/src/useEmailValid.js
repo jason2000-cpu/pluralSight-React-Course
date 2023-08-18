@@ -4,9 +4,9 @@ import useInterval from './useInterval'
 
 function useEmailValidating(time) {
     const validateEmail = (email) => {
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}]))/
-        // return re.test(email)
-        return email.includes('@')
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(email)
+        // return email.includes('@')
     }
     const [emailValid, setEmailValid] = useState(false);
     const emailReducer = (state, action) => {
