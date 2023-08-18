@@ -5,58 +5,32 @@ import Menu  from "./Menu";
 import SpeakerDetail  from "./SpeakerDetail";
 import SpeakerData from "./SpeakerData";
 import { ConfigContext } from "./App";
+import SpeakerReducer from "./speakerReducer";
 import speakerData from "./SpeakerData";
-
 
 const Speakers = () => {
     // const [speakerList, setSpeakerList] = useState([]);
-
-    const speakerReducer =(state, action) => {
-        const updateFavourite = (favoriteVal) => {
-            return state.map((item, index) => {
-                if(item.id === action.sessionId) {
-                    return {...item, favorite: favoriteVal}
-                }
-                return item
-            })
-        }
-
-        switch (action.type) {
-            case "setSpeakerList" : {
-                return action.data
-            }
-            case "favorite" : {
-                return updateFavourite(true)
-            }
-            case "unvaforite": {
-                return updateFavourite(false)
-            }
-            default : 
-                return state
-        }
-    }
-    const [speakerList, dispatch] = useReducer(speakerReducer, [])
-    const [isLoading, setIsLoading] = useState(true);
+    let [{ isLoading, speakerList }, dispatch] = useReducer(SpeakerReducer, {
+        isLoading: true,
+        speakerList: []
+    })
+    // const [isLoading, setIsLoading] = useState(true);
     const [speakingSaturday, setSpeakingSaturday] = useState(true);
     const [speakingSunday, setSpeakingSunday] = useState(true)
 
     const context = useContext(ConfigContext);
 
     useEffect(() => {
-        setIsLoading(true);
         new Promise(function(resolve) {
             setTimeout(function() {
                 resolve();
             }, 1000);
         }).then(() => {
-            setIsLoading(false);
+            dispatch({
+                type: "setSpeakerList",
+                data: SpeakerData,
+            })
         });
-        // setSpeakerList(SpeakerData);
-        dispatch({
-            type: "setSpeakerList",
-            data: SpeakerData
-        })
-        // console.log(speakerData)
         return () => {
             console.log("cleanup");
         }
@@ -77,7 +51,7 @@ const Speakers = () => {
 
         dispatch({
             type: favoriteValue === true ? "favorite" : "unvaforite",
-            sessionId: sessionId
+            id: sessionId
         })
         // setSpeakerList(
         //     speakerList.map((item) => {
