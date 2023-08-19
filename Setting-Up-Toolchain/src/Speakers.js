@@ -3,38 +3,15 @@ import React, { useEffect, useState, useContext, useReducer, useCallback, useMem
 import  Header  from "./Header";
 import Menu  from "./Menu";
 import SpeakerDetail  from "./SpeakerDetail";
-import SpeakerData from "./SpeakerData";
 import { ConfigContext } from "./App";
-import SpeakerReducer from "./speakerReducer";
-import speakerData from "./SpeakerData";
+import useSpeakerDataManager from "./useSpeakerDataManager";
+
 
 const Speakers = () => {
-    // const [speakerList, setSpeakerList] = useState([]);
-    let [{ isLoading, speakerList }, dispatch] = useReducer(SpeakerReducer, {
-        isLoading: true,
-        speakerList: []
-    })
-    // const [isLoading, setIsLoading] = useState(true);
+    const context = useContext(ConfigContext);
     const [speakingSaturday, setSpeakingSaturday] = useState(true);
     const [speakingSunday, setSpeakingSunday] = useState(true)
 
-    const context = useContext(ConfigContext);
-
-    useEffect(() => {
-        new Promise(function(resolve) {
-            setTimeout(function() {
-                resolve();
-            }, 1000);
-        }).then(() => {
-            dispatch({
-                type: "setSpeakerList",
-                data: SpeakerData,
-            })
-        });
-        return () => {
-            console.log("cleanup");
-        }
-    }, []);
     
     const handleChangeSaturday = () => {
         setSpeakingSaturday(!speakingSaturday);
@@ -43,7 +20,7 @@ const Speakers = () => {
         setSpeakingSunday(!speakingSunday);
     };
 
-  
+    const { isLoading, speakerList, dispatch } = useSpeakerDataManager()
 
     const heartFavoriteHandler = useCallback((e, favoriteValue) => {
         e.preventDefault();
@@ -53,14 +30,6 @@ const Speakers = () => {
             type: favoriteValue === true ? "favorite" : "unvaforite",
             id: sessionId
         })
-        // setSpeakerList(
-        //     speakerList.map((item) => {
-        //         if (item.id === sessionId) {
-        //             return {...item, favorite:favoriteValue};
-        //         }
-        //         return item;
-        //     })
-        // )
     }, [])
 
     const newSpeakerList = useMemo(() => speakerList
