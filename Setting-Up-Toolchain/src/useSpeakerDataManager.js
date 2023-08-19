@@ -9,6 +9,21 @@ const useSpeakerDataManager = () => {
         isLoading: true,
         speakerList: []
     })
+    const toggleSpeakerFavorite = (speakerRec) => {
+        // speakerRec.favorite === true ? 
+        //     dispatch({
+        //             type: "unfavorite",
+        //             id: speakerRec.id
+        //     }) :
+        //     dispatch({
+        //         type: "favorite",
+        //         id: speakerRec.id
+        //     })
+        dispatch({
+            type: speakerRec.favorite === true ? "unfavorite" : "favorite",
+            id: speakerRec.id
+        })
+    }
     
     useEffect(() => {
         new Promise(function(resolve) {
@@ -26,7 +41,7 @@ const useSpeakerDataManager = () => {
         }
     }, []);
 
-    return { isLoading, speakerList, dispatch}
+    return { isLoading, speakerList, toggleSpeakerFavorite}
 }
 
 export default useSpeakerDataManager;
