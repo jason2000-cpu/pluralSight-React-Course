@@ -10,19 +10,20 @@ const useSpeakerDataManager = () => {
         speakerList: []
     })
     const toggleSpeakerFavorite = (speakerRec) => {
-        // speakerRec.favorite === true ? 
-        //     dispatch({
-        //             type: "unfavorite",
-        //             id: speakerRec.id
-        //     }) :
-        //     dispatch({
-        //         type: "favorite",
-        //         id: speakerRec.id
-        //     })
-        dispatch({
-            type: speakerRec.favorite === true ? "unfavorite" : "favorite",
-            id: speakerRec.id
-        })
+        // dispatch({
+        //     type: speakerRec.favorite === true ? "unfavorite" : "favorite",
+        //     id: speakerRec.id
+        // })
+        async function updateData() {
+            fetch(`/api/speakers/${speakerRec.id}`,{
+                body: {...speakerRec, favorite: !speakerRec.favorite}
+            })
+            dispatch({
+                type: speakerRec.favorite === true ? "unfavorite" : "favorite"
+            })
+        }
+
+        updateData();
     }
     
     useEffect(() => {
@@ -31,10 +32,16 @@ const useSpeakerDataManager = () => {
                 resolve();
             }, 1000);
         }).then(() => {
-            dispatch({
-                type: "setSpeakerList",
-                data: speakerData,
-            })
+            // dispatch({
+            //     type: "setSpeakerList",
+            //     data: speakerData,
+            // })
+             async function fetchData () {
+                const result = await fetch('/api/speakers')
+                dispatch({ type: "setSpeakerList", data: result.data })
+                console.log(result)
+            }
+            fetchData();
         });
         return () => {
             console.log("cleanup");

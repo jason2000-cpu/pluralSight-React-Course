@@ -16,7 +16,7 @@ const SpeakerReducer =(state, action) => {
             // return updateFavourite(true)
             return { ...state, speakerList: updateFavourite(true)}
         }
-        case "unvaforite": {
+        case "unfavorite": {
             // return updateFavourite(false)
             return { ...state, speakerList: updateFavourite(false)}
         }

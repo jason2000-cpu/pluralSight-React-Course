@@ -2,6 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+  "/Speakers": "pages/Speakers.js",
   "/": "pages/index.js",
-  "/Speakers": "pages/Speakers.js"
+  "/api/speakers": "pages/api/speakers.js"
 }
