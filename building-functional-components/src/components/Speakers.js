@@ -3,13 +3,13 @@ import SpeakersList from "./SpeakersList";
 import SpeakersToolbar from "./SpeakersToolbar";
 
 
-function Speakers({ theme, setTheme, data}) {
+function Speakers({ theme, setTheme}) {
     const [showSessions, setShowSessions] = useState(true);
 
     return (
         <>
             <SpeakersToolbar theme={theme} setTheme={setTheme} showSessions={showSessions} setShowSessions={setShowSessions} />
-            <SpeakersList data={data} showSessions={showSessions} />
+            <SpeakersList showSessions={showSessions} />
         </>
     )
 }

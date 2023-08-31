@@ -27,6 +27,18 @@ function Session({ title, room }) {
         </div>
     )
   }
+
+  function SpeakerFavorite({ favorite }) {
+    return (
+      <div className="action padB1">
+        <span>
+          <i className= {favorite === true ? "fa fa-star orange" : "fa fa-star-o orange"} /> {" "}
+          Favorite {" "}
+        </span>
+
+      </div>
+    )
+  }
   
   function SpeakerDemographics({ first, last, bio, company, twitterHandle, favorite }) {
     return (
@@ -55,13 +67,16 @@ function Session({ title, room }) {
   }
   
   function Speaker({ speaker, showSessions }) {
-    const {id, first, last, sessions}  = speaker
+    const {id, first, last, sessions, favorite}  = speaker
     return (
         <div key={id} className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-sm-12 col-xs-12">
             <div className="card card-height p-4 mt-4">
   
                 {/* speaker Image */}
                 <SpeakerImage id={id} first={first} last={last} />
+
+                {/* speaker favourite */}
+                <SpeakerFavorite favorite={favorite} />
   
                 {/* speaker demographics */}
                 <SpeakerDemographics {...speaker} />
