@@ -28,11 +28,15 @@ function Session({ title, room }) {
     )
   }
 
-  function SpeakerFavorite({ favorite }) {
+  function SpeakerFavorite({ favorite, onFavoriteToggle}) {
     return (
       <div className="action padB1">
-        <span>
-          <i className= {favorite === true ? "fa fa-star orange" : "fa fa-star-o orange"} /> {" "}
+        <span
+              onClick={onFavoriteToggle}
+        >
+          <i 
+              className= {favorite === true ? "fa fa-star orange" : "fa fa-star-o orange"} 
+            /> {" "}
           Favorite {" "}
         </span>
 
@@ -66,7 +70,7 @@ function Session({ title, room }) {
     )
   }
   
-  function Speaker({ speaker, showSessions }) {
+  function Speaker({ speaker, showSessions, setSpeakersData, speakersData }) {
     const {id, first, last, sessions, favorite}  = speaker
     return (
         <div key={id} className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-sm-12 col-xs-12">
@@ -76,7 +80,7 @@ function Session({ title, room }) {
                 <SpeakerImage id={id} first={first} last={last} />
 
                 {/* speaker favourite */}
-                <SpeakerFavorite favorite={favorite} />
+                <SpeakerFavorite favorite={favorite} onFavoriteToggle={onFavoriteToggle} />
   
                 {/* speaker demographics */}
                 <SpeakerDemographics {...speaker} />
