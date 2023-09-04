@@ -17,19 +17,21 @@ function SpeakersList({ showSessions }) {
         const SpeakersDataNew = speakersData.map(function (rec){
             return rec.id === id ? speakerRecUpdated : rec;
         });
-
         setSpeakersData(SpeakersDataNew);
+       
     }
     return (
         <div className="container speakers-list">
             <div className="row">
                 { speakersData.map((speaker) => {
                 return (
-                    <Speaker 
-                        key={speaker.id} 
-                        speaker={speaker}  
-                        showSessions={showSessions}  
-                        onFavoriteToggle={onFavoriteToggle(speaker.id)}
+                    <Speaker
+                        key={speaker.id}
+                        speaker={speaker}
+                        showSessions={showSessions}
+                        onFavoriteToggle={()=>{
+                            onFavoriteToggle(speaker.id);
+                        }}
 
                         />
                 )

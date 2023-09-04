@@ -70,7 +70,7 @@ function Session({ title, room }) {
     )
   }
   
-  function Speaker({ speaker, showSessions, setSpeakersData, speakersData }) {
+  function Speaker({ speaker, showSessions, setSpeakersData, speakersData, onFavoriteToggle }) {
     const {id, first, last, sessions, favorite}  = speaker
     return (
         <div key={id} className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-sm-12 col-xs-12">
