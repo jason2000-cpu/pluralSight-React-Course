@@ -1,22 +1,20 @@
-import { useState, useEffect } from 'react';
-import { data } from "../../SpeakerData";
+import { data } from '../../SpeakerData';
 import Speaker from './Speaker'
-import useRequestSpeakers from '../hooks/useRequestSpeakers';
+import useRequestDelay, { REQUEST_STATUS } from '../hooks/useRequestDelay';
 
 import ReactPlaceholder from 'react-placeholder';
 
 
 function SpeakersList({ showSessions }) {
     const { 
-        isLoading,
-        hasErrored,
+        requestStatus,
         error,
-        speakersData,
-        onFavoriteToggle
-    } = useRequestSpeakers(2000);
+        data:speakersData,
+        updateRecord
+    } = useRequestDelay(2000, data);
 
 
-    if(hasErrored){
+    if(requestStatus === REQUEST_STATUS.FAILURE){
         return (
             <div>
                 Loading has errored for the following reason: {error.message}
@@ -24,14 +22,12 @@ function SpeakersList({ showSessions }) {
         )
     }
 
-    // if(isLoading === true) return <div>Loading....</div>
-    // hasErrored && <div>Error: {error}</div>;
     return (
         <ReactPlaceholder
             type="media"
             rows={15}
             className="speakerslist-placeholder"
-            ready={!isLoading}
+            ready={requestStatus === REQUEST_STATUS.SUCCESS}
         >
             <div className="container speakers-list">
                 <div className="row">
@@ -42,9 +38,11 @@ function SpeakersList({ showSessions }) {
                             speaker={speaker}
                             showSessions={showSessions}
                             onFavoriteToggle={()=>{
-                                onFavoriteToggle(speaker.id);
+                                updateRecord({
+                                    ...speaker,
+                                    favorite: !speaker.favorite
+                                });
                             }}
-
                             />
                     )
                     })}
