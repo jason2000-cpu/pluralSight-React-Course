@@ -6,7 +6,7 @@ import ReactPlaceholder from 'react-placeholder';
 
 
 function SpeakersList({ showSessions }) {
-    const { 
+    const {
         requestStatus,
         error,
         data:speakersData,
