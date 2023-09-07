@@ -45,7 +45,7 @@ function useRequestDelay(delayTime = 1000, initialData = []) {
                     if (doneCallback) {
                         doneCallback();
                     }
-                    
+
                 })
 
             } catch(err) {
@@ -55,7 +55,6 @@ function useRequestDelay(delayTime = 1000, initialData = []) {
                 }
                 setData(originalRecord);
             }
-
         }
         delayFunction();
     }

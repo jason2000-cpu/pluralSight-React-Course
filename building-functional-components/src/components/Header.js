@@ -1,5 +1,13 @@
+import { ThemeContext } from  '../Contexts/ThemeProvider';
+import { useContext } from 'react';
 
-function Header({ theme }) {
+
+
+
+function Header() {
+
+    const { theme } = useContext(ThemeContext);
+
     return (
         <div className="padT4 padB4">
             <div className="container mobile-container">
