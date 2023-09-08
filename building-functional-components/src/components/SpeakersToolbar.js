@@ -1,10 +1,15 @@
 import React, { useContext } from 'react'
 import { ThemeContext } from '../Contexts/ThemeProvider';
-import { SpeakerFilterContext } from '@/Contexts/ShowSessionsProvider';
+import { SpeakerFilterContext } from '@/Contexts/SpeakerFilterContext';
 
 function SpeakersToolbar() {
     const {theme, setTheme} = useContext(ThemeContext)
-    const {showSessions, setShowSessions} = useContext(SpeakerFilterContext)
+    const {
+            showSessions, setShowSessions,
+            eventYear, setEventYear,
+            searchQuery, setSearchQuery,
+            EVENT_YEARS
+        } = useContext(SpeakerFilterContext)
 
     return (
         <section className="toolbar dark-theme-header">
@@ -34,6 +39,34 @@ function SpeakersToolbar() {
                                             <option value="light">Light</option>
                                             <option value="dark">Dark</option>
                                     </select>
+                                </label>
+                            </li>
+                            <li >
+                                <div className="input-group">
+                                    <input type="text" className="form-control" placeholder="Search..."
+                                        value={searchQuery}
+                                        onChange={(event) => { setSearchQuery(event.target.value)}} 
+                                        />
+                                </div>
+                                <div className="input-group-append">
+                                    <button className="btn btn-secondary " type="button">
+                                        <i className="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </li>
+                            <li className="d-flex flex-column flex-md-row ">
+                                <strong>Year</strong>
+                                <label className="dropmenu">
+                                    <select className="form-control" value={eventYear}
+                                        onChange={({ currentTarget }) => { setEventYear(currentTarget.value)}}
+                                        >
+                                            { EVENT_YEARS.map(function(year) {
+                                                return (
+                                                    <option value={year} key={year}>{year}</option>
+                                                )
+                                             })
+                                            }
+                                        </select>
                                 </label>
                             </li>
                         </ul>

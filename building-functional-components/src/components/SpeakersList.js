@@ -1,10 +1,14 @@
+import { useContext } from 'react';
 import { data } from '../../SpeakerData';
 import Speaker from './Speaker'
 import useRequestDelay, { REQUEST_STATUS } from '../hooks/useRequestDelay';
 import ReactPlaceholder from 'react-placeholder';
+import { SpeakerFilterContext } from '@/Contexts/SpeakerFilterContext'; 
+
 
 
 function SpeakersList() {
+    const { eventYear, searchQuery } = useContext(SpeakerFilterContext);
     const {
         requestStatus,
         error,
@@ -30,20 +34,38 @@ function SpeakersList() {
         >
             <div className="container speakers-list">
                 <div className="row">
-                    { speakersData.map((speaker) => {
-                    return (
-                        <Speaker
-                            key={speaker.id}
-                            speaker={speaker}
-                            onFavoriteToggle={(doneCallback)=>{
-                                updateRecord({
-                                    ...speaker,
-                                    favorite: !speaker.favorite
-                                }, doneCallback);
-                            }}
-                            />
-                    )
-                    })}
+                    { speakersData
+                        .filter((speaker) => {
+                        return (
+                            speaker.first.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            speaker.last.toLowerCase().includes(searchQuery.toLowerCase())
+                        );
+                       })
+                        .filter((speaker) => {
+                            {/* return speaker.sessions.find((session) => {
+                                return session.eventYear === eventYear;
+                            }) */}
+
+                            return eventYear === "all" ? speaker : 
+                                speaker.sessions.find((session) => {
+                                    return session.eventYear === eventYear;
+                                })
+                        })
+                        .map((speaker) => {
+                            return (
+                                <Speaker
+                                    key={speaker.id}
+                                    speaker={speaker}
+                                    onFavoriteToggle={(doneCallback)=>{
+                                        updateRecord({
+                                            ...speaker,
+                                            favorite: !speaker.favorite
+                                        }, doneCallback);
+                                    }}
+                                    />
+                            )
+                        })
+                    }
                 </div>
             </div>
         </ReactPlaceholder>
