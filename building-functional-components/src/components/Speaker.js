@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { SpeakerFilterContext } from "../Contexts/SpeakerFilterContext";
+import { SpeakerContext, SpeakerProvider } from "@/Contexts/speakerContext";
 
 
 function Session({ title, room }) {
@@ -10,8 +11,10 @@ function Session({ title, room }) {
     );
   }
   
-  function Sessions ({ sessions }) {
+  function Sessions () {
     const { eventYear } = useContext(SpeakerFilterContext);
+    const { speaker } = useContext(SpeakerContext);
+    const sessions = speaker.sessions
     return (
       <div className="sessionBox card h-250">
          { sessions.filter((session) => {
@@ -27,7 +30,8 @@ function Session({ title, room }) {
     )
   }
   
-  function SpeakerImage({ id, first, last }) {
+  function SpeakerImage() {
+    const {speaker: { id, first, last}} = useContext(SpeakerContext)
     return (
         <div className="speaker-img">
           <img 
@@ -40,8 +44,10 @@ function Session({ title, room }) {
     )
   }
 
-  function SpeakerFavorite({ favorite, onFavoriteToggle}) {
+  function SpeakerFavorite() {
     const [inTransition, setIntransition] = useState(false);
+    const { speaker, updateRecord} = useContext(SpeakerContext);
+    const {favorite } = speaker;
 
     function doneCallback() {
       setIntransition(false);
@@ -52,7 +58,7 @@ function Session({ title, room }) {
         <span
               onClick={()=>{
                 setIntransition(true);
-                onFavoriteToggle(doneCallback)
+                updateRecord({...speaker, favorite: !favorite}, doneCallback)
                 }}
         >
           <i 
@@ -66,7 +72,9 @@ function Session({ title, room }) {
     )
   }
   
-  function SpeakerDemographics({ first, last, bio, company, twitterHandle, favorite }) {
+  function SpeakerDemographics() {
+    const { speaker } = useContext(SpeakerContext);
+    const { first, last, bio, company, twitterHandle, favorite } = speaker
     return (
       <div className="speaker-info">
           <div className="d-flex justify-content-between mb-3">
@@ -92,28 +100,30 @@ function Session({ title, room }) {
     )
   }
   
-  function Speaker({ speaker, onFavoriteToggle }) {
+  function Speaker({ speaker, updateRecord }) {
     const {id, first, last, sessions, favorite}  = speaker;
     const { showSessions } = useContext(SpeakerFilterContext);
     return (
-        <div key={id} className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-sm-12 col-xs-12">
-            <div className="card card-height p-4 mt-4">
-  
-                {/* speaker Image */}
-                <SpeakerImage id={id} first={first} last={last} />
+      <SpeakerProvider speaker={speaker} updateRecord={updateRecord}>
+            <div key={id} className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-sm-12 col-xs-12">
+              <div className="card card-height p-4 mt-4">
+    
+                  {/* speaker Image */}
+                  <SpeakerImage />
 
-                {/* speaker favourite */}
-                <SpeakerFavorite favorite={favorite} onFavoriteToggle={onFavoriteToggle} />
-  
-                {/* speaker demographics */}
-                <SpeakerDemographics {...speaker} />
-  
-                {/* speaker speaking sessions */}
-                {showSessions === true ? <Sessions sessions={sessions} /> : null } 
-                {/* <Sessions sessions={sessions} /> */}
-                {/* <p>{ showSessions }</p> */}
-            </div>
-        </div>
+                  {/* speaker favourite */}
+                  <SpeakerFavorite />
+    
+                  {/* speaker demographics */}
+                  <SpeakerDemographics />
+    
+                  {/* speaker speaking sessions */}
+                  {showSessions === true ? <Sessions /> : null } 
+                  {/* <Sessions sessions={sessions} /> */}
+                  {/* <p>{ showSessions }</p> */}
+              </div>
+          </div>
+      </SpeakerProvider>
     )
   }
 
