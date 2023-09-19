@@ -3,7 +3,8 @@ import { SpeakerFilterContext } from "../Contexts/SpeakerFilterContext";
 import { SpeakerContext, SpeakerProvider } from "@/Contexts/speakerContext";
 
 
-function Session({ title, room }) {
+function Session({ session }) {
+  const { title, room } = session
     return (
       <span className="session w-100">
         { title } <strong>Room: { room.name }</strong>
@@ -100,12 +101,11 @@ function Session({ title, room }) {
     )
   }
   
-  function Speaker({ speaker, updateRecord }) {
-    const {id, first, last, sessions, favorite}  = speaker;
+  function Speaker({ speaker, updateRecord, insertRecord, deleteRecord }) {
     const { showSessions } = useContext(SpeakerFilterContext);
     return (
-      <SpeakerProvider speaker={speaker} updateRecord={updateRecord}>
-            <div key={id} className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-sm-12 col-xs-12">
+      <SpeakerProvider speaker={speaker} updateRecord={updateRecord} insertRecord={insertRecord} deleteRecord={deleteRecord} >
+            <div key={speaker.id} className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-sm-12 col-xs-12">
               <div className="card card-height p-4 mt-4">
     
                   {/* speaker Image */}

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { data } from '../../SpeakerData';
 import Speaker from './Speaker'
+import  SpeakerAdd from './SpeakerAdd';
 import useRequestDelay, { REQUEST_STATUS } from '../hooks/useRequestDelay';
 import ReactPlaceholder from 'react-placeholder';
 import { SpeakerFilterContext } from '@/Contexts/SpeakerFilterContext'; 
@@ -13,7 +14,9 @@ function SpeakersList() {
         requestStatus,
         error,
         data:speakersData,
-        updateRecord
+        updateRecord,
+        insertRecord,
+        deleteRecord
     } = useRequestDelay(2000, data);
 
 
@@ -32,6 +35,7 @@ function SpeakersList() {
             className="speakerslist-placeholder"
             ready={requestStatus === REQUEST_STATUS.SUCCESS}
         >
+            <SpeakerAdd eventYear={eventYear} insertRecord={insertRecord} />
             <div className="container speakers-list">
                 <div className="row">
                     { speakersData
@@ -57,6 +61,8 @@ function SpeakersList() {
                                     key={speaker.id}
                                     speaker={speaker}
                                     updateRecord={updateRecord}
+                                    deleteRecord={deleteRecord}
+                                    insertRecord={insertRecord}
                                 />
                             )
                         })

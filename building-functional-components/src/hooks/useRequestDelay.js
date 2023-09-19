@@ -33,10 +33,60 @@ function useRequestDelay(delayTime = 1000, initialData = []) {
         delayFunc();
     }, []);
 
-    function updateRecord(recordUpdated, doneCallback) {
+    function updateRecord(record, doneCallback) {
         const newRecords = data.map( function(rec){
-            return rec.id === recordUpdated.id ? recordUpdated : rec;
+            return rec.id === record.id ? record : rec;
         })
+
+        function delayFunction() {
+            try {
+                setData(newRecords);
+                delay(delayTime).then(()=> {
+                    if (doneCallback) {
+                        doneCallback();
+                    }
+
+                })
+
+            } catch(err) {
+                console.log("Error thrown inside delayFunction", err);
+                if (doneCallback) {
+                    doneCallback();
+                }
+                setData(originalRecord);
+            }
+        }
+        delayFunction();
+    }
+
+
+    function insertRecord(record, doneCallback) {
+        const newRecords = [record, ...data]
+
+        function delayFunction() {
+            try {
+                setData(newRecords);
+                delay(delayTime).then(()=> {
+                    if (doneCallback) {
+                        doneCallback();
+                    }
+
+                })
+
+            } catch(err) {
+                console.log("Error thrown inside delayFunction", err);
+                if (doneCallback) {
+                    doneCallback();
+                }
+                setData(originalRecord);
+            }
+        }
+        delayFunction();
+    }
+
+
+    function deleteRecord(record, doneCallback) {
+        const newRecords = data.filter((rec)=> rec.id != record.id )
 
         function delayFunction() {
             try {
@@ -63,7 +113,9 @@ function useRequestDelay(delayTime = 1000, initialData = []) {
         requestStatus,
         error,
         data,
-        updateRecord
+        updateRecord,
+        insertRecord,
+        deleteRecord
     }
 }
 
