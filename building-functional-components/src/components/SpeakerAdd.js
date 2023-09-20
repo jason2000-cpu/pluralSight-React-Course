@@ -15,7 +15,7 @@ function SpeakerAdd({ eventYear, insertRecord }) {
                         {
                             id: "88888",
                             title: `New Session For ${firstLastArray[0]}`,
-                            root: {
+                            room: {
                                 name: "Main Ball Room"
                             },
                             eventYear,

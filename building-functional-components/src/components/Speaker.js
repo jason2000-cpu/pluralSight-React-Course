@@ -3,8 +3,10 @@ import { SpeakerFilterContext } from "../Contexts/SpeakerFilterContext";
 import { SpeakerContext, SpeakerProvider } from "@/Contexts/speakerContext";
 
 
-function Session({ session }) {
-  const { title, room } = session
+function Session( props ) {
+  // alert(props)
+  const { title, room } = props;
+ 
     return (
       <span className="session w-100">
         { title } <strong>Room: { room.name }</strong>
