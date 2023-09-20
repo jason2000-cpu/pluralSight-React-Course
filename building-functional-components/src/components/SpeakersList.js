@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { data } from '../../SpeakerData';
 import Speaker from './Speaker'
 import  SpeakerAdd from './SpeakerAdd';
-import useRequestDelay, { REQUEST_STATUS } from '../hooks/useRequestDelay';
+import useRequestRest, { REQUEST_STATUS } from '../hooks/useRequestRest';
 import ReactPlaceholder from 'react-placeholder';
 import { SpeakerFilterContext } from '@/Contexts/SpeakerFilterContext'; 
 
@@ -17,7 +17,7 @@ function SpeakersList() {
         updateRecord,
         insertRecord,
         deleteRecord
-    } = useRequestDelay(2000, data);
+    } = useRequestRest();
 
 
     if(requestStatus === REQUEST_STATUS.FAILURE){

@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { SpeakerFilterContext } from "../Contexts/SpeakerFilterContext";
 import { SpeakerContext, SpeakerProvider } from "@/Contexts/speakerContext";
+import  SpeakerDelete  from "./SpeakerDelete";
 
 
 function Session( props ) {
@@ -33,11 +34,24 @@ function Session( props ) {
     )
   }
   
+  function ImageFallBack( src, {...props}) {
+    const [err, setErr] = useState(false);
+    const [ imgSrc, setImgSrc ] = useState(src);
+
+    function onError(){
+      if(!err) {
+        setImgSrc('/images/speaker-99999.jpg')
+        setErr(true);
+      }
+    }
+
+    return <img src={ src } {...props} onError={onError} />
+  }
   function SpeakerImage() {
     const {speaker: { id, first, last}} = useContext(SpeakerContext)
     return (
         <div className="speaker-img">
-          <img 
+          <ImageFallBack
             className="contain-fit"
             src={`/images/speaker-${id}.jpg`}
             width="300"
@@ -123,6 +137,8 @@ function Session( props ) {
                   {showSessions === true ? <Sessions /> : null } 
                   {/* <Sessions sessions={sessions} /> */}
                   {/* <p>{ showSessions }</p> */}
+
+                  <SpeakerDelete />
               </div>
           </div>
       </SpeakerProvider>
