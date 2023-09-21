@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { data } from '../../SpeakerData';
 import Speaker from './Speaker'
 import  SpeakerAdd from './SpeakerAdd';
 import useRequestRest, { REQUEST_STATUS } from '../hooks/useRequestRest';

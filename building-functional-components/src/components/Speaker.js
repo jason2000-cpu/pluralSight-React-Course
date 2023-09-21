@@ -34,7 +34,7 @@ function Session( props ) {
     )
   }
   
-  function ImageFallBack( src, {...props}) {
+  function ImageFallBack({src, ...props}) {
     const [err, setErr] = useState(false);
     const [ imgSrc, setImgSrc ] = useState(src);
 
@@ -45,7 +45,7 @@ function Session( props ) {
       }
     }
 
-    return <img src={ src } {...props} onError={onError} />
+    return <img src={ imgSrc } {...props} onError={onError} />
   }
   function SpeakerImage() {
     const {speaker: { id, first, last}} = useContext(SpeakerContext)

@@ -1,6 +1,8 @@
 import { data } from "../../SpeakerData";
 import { useState, useEffect } from "react";
 
+import axios from 'axios';
+
 export const REQUEST_STATUS = {
     LOADING: "loading",
     SUCCESS: "success",
@@ -10,20 +12,19 @@ export const REQUEST_STATUS = {
 function useRequestRest() {
     const [requestStatus, setRequestStatus] = useState(REQUEST_STATUS.LOADING);
     const [error, setError] = useState("");
-    const [data, setData] = useState(initialData);
+    const [data, setData] = useState([]);
     const originalRecord = [...data];
 
     // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const baseUrl = 'api/speakers'
 
     useEffect(()=>{
-        function delayFunc() {
+        async function delayFunc() {
             try {
-                delay(delayTime).then(()=> {
-                    // throw new Error("fake error");
-                    setRequestStatus(REQUEST_STATUS.SUCCESS);
-                })
-
+                const result = await axios.get(baseUrl)
+                setRequestStatus(REQUEST_STATUS.SUCCESS);
+                setData(result.data);
                 
             } catch(err) {
                 setRequestStatus(REQUEST_STATUS.FAILURE);
@@ -38,15 +39,15 @@ function useRequestRest() {
             return rec.id === record.id ? record : rec;
         })
 
-        function delayFunction() {
+        async function delayFunction() {
             try {
                 setData(newRecords);
-                delay(delayTime).then(()=> {
-                    if (doneCallback) {
-                        doneCallback();
-                    }
+                await axios.put(`${baseUrl}/${record.id}`, record);
+                if (doneCallback) {
+                    doneCallback();
+                }
 
-                })
+                
 
             } catch(err) {
                 console.log("Error thrown inside delayFunction", err);
@@ -63,15 +64,15 @@ function useRequestRest() {
     function insertRecord(record, doneCallback) {
         const newRecords = [record, ...data]
 
-        function delayFunction() {
+        async function delayFunction() {
             try {
                 setData(newRecords);
-                delay(delayTime).then(()=> {
+                await axios.post(`${baseUrl}/99999`, record);
                     if (doneCallback) {
                         doneCallback();
                     }
 
-                })
+                
 
             } catch(err) {
                 console.log("Error thrown inside delayFunction", err);
@@ -91,12 +92,12 @@ function useRequestRest() {
         function delayFunction() {
             try {
                 setData(newRecords);
-                delay(delayTime).then(()=> {
-                    if (doneCallback) {
-                        doneCallback();
-                    }
+                axios.delete(`${baseUrl}/${record.id}`, record);
+                if (doneCallback) {
+                    doneCallback();
+                }
 
-                })
+                
 
             } catch(err) {
                 console.log("Error thrown inside delayFunction", err);
