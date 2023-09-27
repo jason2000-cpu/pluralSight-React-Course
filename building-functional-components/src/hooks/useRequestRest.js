@@ -43,11 +43,10 @@ function useRequestRest() {
             try {
                 setData(newRecords);
                 await axios.put(`${baseUrl}/${record.id}`, record);
-                if (doneCallback) {
+                console.log("The Record:", record)
+                if (doneCallback ) {
                     doneCallback();
                 }
-
-                
 
             } catch(err) {
                 console.log("Error thrown inside delayFunction", err);

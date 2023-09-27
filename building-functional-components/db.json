@@ -5,6 +5,8 @@
       "first": "Jack",
       "last": "Mwangi",
       "bio": "Bio not entered yet",
+      "twitterHandle": "Not...Yet",
+      "favorite": false,
       "sessions": [
         {
           "id": "88888",

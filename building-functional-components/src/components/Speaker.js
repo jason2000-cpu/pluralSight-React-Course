@@ -78,7 +78,7 @@ function Session( props ) {
                 updateRecord({...speaker, favorite: !favorite}, doneCallback)
                 }}
         >
-          <i 
+          <i
               className= {favorite === true ? "fa fa-star orange" : "fa fa-star-o orange"} 
             /> {" "}
           Favorite {" "}

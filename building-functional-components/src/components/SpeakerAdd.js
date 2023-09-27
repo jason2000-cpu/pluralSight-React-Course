@@ -11,6 +11,8 @@ function SpeakerAdd({ eventYear, insertRecord }) {
                     first: firstLastArray[0],
                     last: firstLastArray[1],
                     bio: "Bio not entered yet",
+                    twitterHandle: "Not...Yet",
+                    favorite: false,
                     sessions: [
                         {
                             id: "88888",

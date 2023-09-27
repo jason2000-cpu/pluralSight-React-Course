@@ -39,7 +39,7 @@ export default async function handler(req, res) {
                     res.status(404).send("Error: Request Failed With Status 404")
                 } else {
                     const newSpeakerArray = speakers.map((rec) => {
-                        return  rec.id === id ? recordFromBody : rec
+                        return  rec.id == id ? recordFromBody : rec
                     })
                     writeFile(jsonFile, JSON.stringify({ speakers: newSpeakerArray}, null, 2), () => {
                         if (err) {
@@ -111,7 +111,8 @@ export default async function handler(req, res) {
                         return rec.id != id
                     })
 
-                    const newSpeakerArray = [newSpeakerRec, ...speakers];
+                    // const newSpeakerArray = [newSpeakerRec, ...speakers];
+                    const newSpeakerArray = newSpeakerRec;
                     writeFile(jsonFile, JSON.stringify({ speakers: newSpeakerArray}, null, 2), 'utf8', (err)=>{
                         if (err) {
                             res.status(500).send("Error While writing file", err)
@@ -132,5 +133,4 @@ export default async function handler(req, res) {
             console.log(`DELETE /api/speakers/${id} status : 500`, err)
         }
     }
-
 }
