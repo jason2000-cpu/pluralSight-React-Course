@@ -1,0 +1,19 @@
+{
+  "name": "next-app",
+  "version": "1.0.0",
+  "description": "Server Side Rendered Next Js App",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "author": "jason2000-cpu",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^13.5.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
